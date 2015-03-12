@@ -7,7 +7,7 @@ var focusClientCommand = (function() {
       console.log(direction);
       switch(direction){
         case "up": {
-          moveToNextElement("up")
+          moveToNextElement("up");
           break;
         }
         case "down" : {

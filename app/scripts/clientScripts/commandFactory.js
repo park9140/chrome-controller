@@ -13,6 +13,10 @@ var commandFactory = (function() {
                     return browserNavigationClientCommand;
                     break;
                 }
+                case "confirmselection": {
+                    return selectClientCommand;
+                    break;
+                }
                 default: {
                     throw new Error("Unsupported command " + commandName);
                 }

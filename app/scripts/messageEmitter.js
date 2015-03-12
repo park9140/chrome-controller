@@ -17,6 +17,10 @@ var messageEmitter = (function() {
       sendNavigation: function(direction) {
         var message = new emitterCommand('browserNavigation').addParam('direction', direction);
         sendMessage(message);
+      },
+      sendSelect: function() {
+        var message = new emitterCommand('confirmSelection');
+        sendMessage(message);
       }
     }
 })();

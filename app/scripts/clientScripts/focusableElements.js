@@ -69,3 +69,8 @@ function isThisElementLocatedInTheDirection(direction, elementRectangle, current
       break;
   }
 }
+
+function selectCurrentFocus() {
+    var target = document.activeElement;
+    target.click();
+}

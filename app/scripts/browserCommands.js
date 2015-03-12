@@ -48,6 +48,8 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           onPreviousTab();
           break;
       case 'confirm':
+          messageEmitter.sendSelect();
+          break;
       case 'cancel':
       case 'home':
           break;
