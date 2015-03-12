@@ -64,6 +64,7 @@
       ],
       "js": [
         "scripts/contentscript.js",
+        "scripts/elementDistance.js",
         "scripts/focusableElements.js"
       ],
       "run_at": "document_end",

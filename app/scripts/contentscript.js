@@ -7,6 +7,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendMessage) {
     case 'up':
         break;
     case 'down':
+        goDown();
         break;
     case 'left':
         break;
