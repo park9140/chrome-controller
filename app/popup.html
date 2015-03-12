@@ -13,6 +13,8 @@
   <body>
     <h1>'Allo, 'Allo!</h1>
 
+    <button id="sendHelloButton">Send hello message to content script</button>
+
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
@@ -20,6 +22,7 @@
 
     <!-- build:js scripts/popup.js -->
     <script src="scripts/popup.js"></script>
+    <script src="scripts/messageEmitter.js"></script>
     <!-- endbuild -->
   </body>
 </html>

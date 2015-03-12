@@ -1,3 +1,6 @@
+/*global chrome */
 'use strict';
 
-console.log('\'Allo \'Allo! Content script');
+chrome.runtime.onMessage.addListener(function (message, sender, sendMessage) {
+  console.log(message + ' ' + sender + ' ' + sendMessage);
+});
