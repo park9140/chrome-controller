@@ -26,7 +26,12 @@
           controller: response.controllerIndex,
           button: response.buttonIndex
         });
-        div.querySelector('span').innerHTML = 'controller :' + response.controllerIndex + ', button: ' + response.buttonIndex;
+
+        var textNode = document.createTextNode('ctrl :' + response.controllerIndex + ', btn: ' + response.buttonIndex);
+        var spanNode = document.createElement('span');
+
+        spanNode.appendChild(textNode);
+        div.querySelector('div').appendChild(spanNode);
       };
 
       chrome.runtime.sendMessage({ id: 'chromeController.getNextButton' }, setBindingFn);
@@ -40,9 +45,15 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
   controllers.forEach(function(controller) {
     var buttons = Object.keys(response[controller]);
     buttons.forEach(function(button) {
-      var action = response[controller][button];
+      var actions = response[controller][button];
 
-      document.getElementById(convertToId(action)).querySelector('span').innerHTML = 'controller :' + controller + ', button: ' + button;
+      actions.forEach(function(action) {
+        var textNode = document.createTextNode('ctrl: ' + controller + ', btn: ' + button);
+        var spanNode = document.createElement('span');
+
+        spanNode.appendChild(textNode);
+        document.getElementById(convertToId(action)).querySelector('div').appendChild(spanNode);
+      });
     });
   });
 });
@@ -55,5 +66,10 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
   document.getElementById('sendZoom')
     .addEventListener('click', function() {
       messageEmitter.sendZoom();
+    });
+
+  document.getElementById('clearStorage')
+    .addEventListener('click', function() {
+      chrome.runtime.sendMessage({ id: 'chromeController.clearBindings' });
     });
 })();

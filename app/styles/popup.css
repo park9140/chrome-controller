@@ -1,0 +1,28 @@
+body {
+  width: 500px;
+}
+
+.binding-container {
+  border: black 1px solid;
+  margin: 10px;
+  padding: 4px 0px;
+}
+
+.binding-container label {
+  font-weight: bold;
+  padding: 5px;
+  border-right: black 1px solid;
+}
+
+.binding-container div {
+  display: inline-block;
+}
+
+.binding-container div span {
+  margin-left: 5px;
+  background-color: #DDD;
+}
+
+.binding-container button {
+  float: right;
+}
