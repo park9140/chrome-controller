@@ -1,3 +1,6 @@
+'use strict';
+console.log('background script start load');
+
 function getPollFn(gamepadIndex) {
   var lastGamepad = {
     buttons: []
@@ -15,7 +18,7 @@ function getPollFn(gamepadIndex) {
       }
       lastGamepad.buttons[i]= gamepad.buttons[i].value;
     }
-  }
+  };
 }
 
 window.addEventListener('controller.buttonPressed', function(e) {
