@@ -1,5 +1,6 @@
 'use strict';
 
+var currentHighlightedElement;
 
 function findFocusables() {
   return document.querySelectorAll('input:not(:disabled):not([readonly]):not([type=hidden]):not([type=checkbox])');
@@ -18,15 +19,21 @@ function buildFocusablesMap() {
 
 function highlightElement(element) {
   if (element) {
+    unHighlightPreviousElements();
+    element.classList.add('controller-focus');
     element.focus();
-    element.style.borderWidth = "5px";
-    element.style.borderStyle = "solid";
-    element.style.borderColor = "red";
   }
 }
 
-function goUp() {
-  console.log('goUp called');
+function unHighlightPreviousElements() {
+  var highlightedElements = document.querySelectorAll('.controller-focus');
+  for(var i=0; i < highlightedElements.length; i++) {
+    highlightedElements[i].classList.remove('controller-focus');
+  }
+}
+
+function moveToNextElement(direction) {
+  console.log(direction +' called');
   var focusableMap = buildFocusablesMap();
   var currentFocusElement = document.activeElement;
   var currentFocusElementRect = currentFocusElement.getBoundingClientRect();
@@ -34,92 +41,31 @@ function goUp() {
   var foundElement = null;
   var prevDistance = 999999999;
   var closestElement = null;
-  console.log(currentFocusElementRect);
   focusableMap.forEach(function(elementRectangle, element, map){
-    if(elementRectangle.bottom < currentFocusElementRect.top) {
+    if (isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)){
       var currentDistance = elementDistance.getDistanceBetweenElements(currentFocusElementRect, elementRectangle);
-      console.log(currentDistance);
       if(currentDistance < prevDistance) {
         closestElement = element;
         prevDistance = currentDistance;
       }
     }
   });
-  console.log(closestElement);
   highlightElement(closestElement);
 }
 
-function goDown() {
-  console.log('goDown called');
-  var focusableMap = buildFocusablesMap();
-  var currentFocusElement = document.activeElement;
-  var currentFocusElementRect = currentFocusElement.getBoundingClientRect();
-
-  var foundElement = null;
-  var prevDistance = 999999999;
-  var closestElement = null;
-  console.log(currentFocusElementRect);
-  focusableMap.forEach(function(elementRectangle, element, map){
-    if(elementRectangle.top > currentFocusElementRect.bottom) {
-      var currentDistance = elementDistance.getDistanceBetweenElements(elementRectangle, currentFocusElementRect);
-      console.log(currentDistance);
-      if(currentDistance < prevDistance) {
-        closestElement = element;
-        prevDistance = currentDistance;
-      }
-    }
-  });
-  console.log(closestElement);
-  highlightElement(closestElement);
+function isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect){
+  switch (direction) {
+    case "up" :
+      return elementRectangle.bottom < currentFocusElementRect.top;
+      break;
+    case "down":
+      return (elementRectangle.top > currentFocusElementRect.bottom);
+      break;
+    case "left":
+      return (elementRectangle.right < currentFocusElementRect.left);
+      break;
+    case "right":
+      return (elementRectangle.left > currentFocusElementRect.right);
+      break;
+  }
 }
-
-function goRight() {
-  console.log('goRight called');
-  var focusableMap = buildFocusablesMap();
-  var currentFocusElement = document.activeElement;
-  var currentFocusElementRect = currentFocusElement.getBoundingClientRect();
-
-  var foundElement = null;
-  var prevDistance = 999999999;
-  var closestElement = null;
-  console.log(currentFocusElementRect);
-  focusableMap.forEach(function(elementRectangle, element, map){
-    if(elementRectangle.left > currentFocusElementRect.right) {
-      var currentDistance = elementDistance.getDistanceBetweenElements(elementRectangle, currentFocusElementRect);
-      console.log(currentDistance);
-      if(currentDistance < prevDistance) {
-        closestElement = element;
-        prevDistance = currentDistance;
-      }
-    }
-  });
-  console.log(closestElement);
-  highlightElement(closestElement);
-}
-
-function goLeft() {
-  console.log('goLeft called');
-  var focusableMap = buildFocusablesMap();
-  var currentFocusElement = document.activeElement;
-  var currentFocusElementRect = currentFocusElement.getBoundingClientRect();
-
-  var foundElement = null;
-  var prevDistance = 999999999;
-  var closestElement = null;
-  console.log(currentFocusElementRect);
-  focusableMap.forEach(function(elementRectangle, element, map){
-    if(elementRectangle.right < currentFocusElementRect.left) {
-      var currentDistance = elementDistance.getDistanceBetweenElements(elementRectangle, currentFocusElementRect);
-      console.log(currentDistance);
-      if(currentDistance < prevDistance) {
-        closestElement = element;
-        prevDistance = currentDistance;
-      }
-    }
-  });
-  console.log(closestElement);
-  highlightElement(closestElement);
-}
-
-window.addEventListener('load', function() {
-});

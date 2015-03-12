@@ -5,16 +5,16 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendMessage) {
   console.log(message);
   switch (message) {
     case 'up':
-        goUp();
+        moveToNextElement('up');
         break;
     case 'down':
-        goDown();
+        moveToNextElement('down');
         break;
     case 'left':
-        goLeft();
+        moveToNextElement('left');
         break;
     case 'right':
-        goRight();
+        moveToNextElement('right');
         break;
   }
 });
