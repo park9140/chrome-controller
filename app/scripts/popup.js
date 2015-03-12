@@ -1,3 +1,13 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Popup');
+(function() {
+  document.getElementById('sendHelloButton')
+          .addEventListener('click', function () {
+            messageEmitter.sendMessageToCurrentTab("hello");
+  });
+
+  document.getElementById('sendZoom')
+    .addEventListener('click', function() {
+      messageEmitter.sendZoom();
+    });
+})();
