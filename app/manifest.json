@@ -65,9 +65,13 @@
         "https://*/*"
       ],
       "js": [
-        "scripts/contentscript.js",
-        "scripts/elementDistance.js",
-        "scripts/focusableElements.js"
+        "scripts/clientScripts/elementDistance.js",
+        "scripts/clientScripts/focusableElements.js",
+        "scripts/clientScripts/contentscript.js",
+        "scripts/clientScripts/focusClientCommand.js",
+        "scripts/clientScripts/browserNavigationClientCommand.js",
+        "scripts/clientScripts/commandFactory.js",
+        "scripts/emitterCommand.js"
       ],
       "css" : ["styles/content.css"],
       "run_at": "document_end",
@@ -79,6 +83,7 @@
     "history",
     "commands",
     "management",
+    "storage",
     "http://*/*",
     "https://*/*"
   ]

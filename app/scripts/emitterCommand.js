@@ -2,17 +2,12 @@ function emitterCommand(commandName, commandParamArray) {
     this.commandName = commandName;
 
     if (commandParamArray) {
-      for (var i=0; i<this.commandParamArray.length; i++) {
-        commandParamArray[i].name = commandParamArray[i].toLowerCase();
+      for (var i=0; i<commandParamArray.length; i++) {
+        commandParamArray[i].name = commandParamArray[i].name.toLowerCase();
       }
     }
 
     this.commandParameters = commandParamArray ? commandParamArray : [];
-}
-
-function emitterCommandParam(name, value) {
-    this.name = name;
-    this.value = value;
 }
 
 emitterCommand.prototype.addParam = function(key, value) {
@@ -36,3 +31,7 @@ emitterCommand.prototype.getParam = function(key) {
   return null;
 }
 
+function emitterCommandParam(name, value) {
+    this.name = name;
+    this.value = value;
+}
