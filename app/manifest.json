@@ -65,7 +65,10 @@
         "https://*/*"
       ],
       "js": [
-        "scripts/contentscript.js"
+        "scripts/contentscript.js",
+        "scripts/browserNavigationClientCommand.js",
+        "scripts/commandFactory.js",
+        "scripts/emitterCommand.js"
       ],
       "run_at": "document_end",
       "all_frames": false
