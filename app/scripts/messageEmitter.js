@@ -10,6 +10,10 @@ var messageEmitter = (function() {
       sendMessageToCurrentTab: function(data) {
         sendMessage(data);
       },
+      sendMove: function(direction) {
+          var message = new emitterCommand('moveFocus').addParam('direction', direction);
+          sendMessage(message);
+      },
       sendNavigation: function(direction) {
         var message = new emitterCommand('browserNavigation').addParam('direction', direction);
         sendMessage(message);
