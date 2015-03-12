@@ -1,5 +1,6 @@
 'use strict';
-console.log('background script start load');
+
+var buttonPressCallback;
 
 function getPollFn(gamepadIndex) {
   var lastGamepad = {
@@ -13,13 +14,35 @@ function getPollFn(gamepadIndex) {
       if (gamepad.buttons[i].pressed && lastGamepad.buttons[i] !== gamepad.buttons[i].value) {
         console.log('controller button ' + i + ' pressed with value ' + gamepad.buttons[i].value);
 
-        var event = new CustomEvent('controller.buttonPressed', { detail: { controllerIndex: gamepadIndex, buttonIndex: i, value: gamepad.buttons[i].value } });
-        window.dispatchEvent(event);
+        var eventData = {
+          id: 'controller.buttonPressed',
+          controllerIndex: gamepadIndex,
+          buttonIndex: i,
+          value: gamepad.buttons[i].value
+        };
+
+        window.dispatchEvent(new CustomEvent('controller.buttonPressed', { detail: eventData }));
+        chrome.runtime.sendMessage(eventData);
+        if (buttonPressCallback) {
+          buttonPressCallback(eventData);
+          buttonPressCallback = undefined;
+        }
       }
       lastGamepad.buttons[i]= gamepad.buttons[i].value;
     }
   };
 }
+
+chrome.runtime.onMessage.addListener(function(e, sender, callback) {
+  console.log('controller.js - chrome event recieved: ', e);
+
+  switch(e.id) {
+    case 'chromeController.getNextButton':
+      buttonPressCallback = callback;
+      return true;
+    default:
+  }
+});
 
 window.addEventListener('controller.buttonPressed', function(e) {
   console.log('button event handled: ', e.detail);

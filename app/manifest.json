@@ -12,7 +12,8 @@
     "scripts": [
       "scripts/chromereload.js",
       "scripts/background.js",
-      "scripts/controller.js"
+      "scripts/controller.js",
+      "scripts/keyBindings.js"
     ]
   },
   "browser_action": {
