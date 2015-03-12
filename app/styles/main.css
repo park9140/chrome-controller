@@ -1,3 +1,11 @@
 body {
   padding: 20px;
 }
+
+.debugContainer {
+  margin: 10px;
+}
+
+.debugContainer button {
+  display: block;
+}
