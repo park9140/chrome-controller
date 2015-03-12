@@ -76,6 +76,7 @@
     "history",
     "commands",
     "management",
+    "storage",
     "http://*/*",
     "https://*/*"
   ]
