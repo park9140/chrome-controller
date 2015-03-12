@@ -18,18 +18,31 @@
     ]
   },
   "commands": {
-    "nextTab": {
+    "up": {
       "suggested_key": {
-        "default": "Ctrl+Right"
+        "default": "Ctrl+Shift+Up"
       },
-      "description": "Go to next tab"
+      "description": "Select item above current item"
     },
-    "previousTab": {
+    "down": {
       "suggested_key": {
-        "default": "Ctrl+Left"
+        "default": "Ctrl+Shift+Down"
       },
-      "description": "Go to previous tab"
+      "description": "Select item below current item"
+    },
+    "left": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Left"
+      },
+      "description": "Select item left of current item"
+    },
+    "right": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Right"
+      },
+      "description": "Select item right of current item"
     }
+
   },
   "browser_action": {
     "default_icon": {

@@ -41,5 +41,11 @@ chrome.commands.onCommand.addListener(function(command) {
             tabEvent = new CustomEvent('chromeController.previousTab');
             document.dispatchEvent(tabEvent);
             break;
+        case 'up':
+        case 'down':
+        case 'left':
+        case 'right':
+            messageEmitter.sendMessageToCurrentTab(command);
+            break;
     }
 });
