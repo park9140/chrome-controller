@@ -37,6 +37,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           break;
       case 'forward':
           messageEmitter.sendNavigation('forward');
+          break;
       case 'back':
           messageEmitter.sendNavigation('backward');
           break;
