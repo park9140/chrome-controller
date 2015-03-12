@@ -70,6 +70,7 @@
         "scripts/commandFactory.js",
         "scripts/emitterCommand.js"
       ],
+      "css" : ["styles/content.css"],
       "run_at": "document_end",
       "all_frames": false
     }
@@ -79,6 +80,7 @@
     "history",
     "commands",
     "management",
+    "storage",
     "http://*/*",
     "https://*/*"
   ]
