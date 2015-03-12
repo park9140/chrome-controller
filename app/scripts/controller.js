@@ -1,3 +1,6 @@
+'use strict';
+console.log('background script start load');
+
 function getPollFn(gamepadIndex) {
   var lastGamepad = {
     buttons: []
@@ -12,16 +15,16 @@ function getPollFn(gamepadIndex) {
       }
       lastGamepad.buttons[i]= gamepad.buttons[i].value;
     }
-  }
+  };
 }
 
 var thinkers = [];
 
-window.addEventListener("gamepadconnected", function(e) {
+window.addEventListener('gamepadconnected', function(e) {
   console.log('gamepad connected');
   thinkers[e.gamepad.index] = setInterval(getPollFn(e.gamepad.index), 100);
 });
 
-window.addEventListener("gamepaddisconnected", function(e) {
+window.addEventListener('gamepaddisconnected', function(e) {
   thinkers[e.gamepad.index]();
 });
