@@ -17,6 +17,10 @@ var commandFactory = (function() {
                     return selectClientCommand;
                     break;
                 }
+                case "togglefullscreen": {
+                    return browserFullScreenClientCommand;
+                    break;
+                }
                 default: {
                     throw new Error("Unsupported command " + commandName);
                 }
