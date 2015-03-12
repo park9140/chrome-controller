@@ -1,3 +1,8 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Popup');
+(function() {
+  document.getElementById('sendHelloButton')
+          .addEventListener('click', function () {
+            messageEmitter.sendMessageToCurrentTab("hello");
+  });
+})();
