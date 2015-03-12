@@ -1,0 +1,10 @@
+function emitterCommand(commandName, commandParamArray) {
+    this.commandName = first;
+    this.commandParameters = commandParamArray;
+}
+
+function emitterCommandParam(name, value)
+{
+    this.name = name;
+    this.value = value;
+}
