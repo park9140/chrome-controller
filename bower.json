@@ -1,6 +1,8 @@
 {
   "name": "chrome-controller",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "mousetrap": "~1.4.6"
+  },
   "devDependencies": {}
 }

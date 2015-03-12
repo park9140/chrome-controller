@@ -1,3 +1,16 @@
+/*global chrome */
 'use strict';
 
-console.log('\'Allo \'Allo! Content script');
+chrome.runtime.onMessage.addListener(function (message, sender, sendMessage) {
+  console.log(message);
+  switch (message) {
+    case 'up':
+        break;
+    case 'down':
+        break;
+    case 'left':
+        break;
+    case 'right':
+        break;
+  }
+});

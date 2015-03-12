@@ -11,6 +11,12 @@
     <!-- endbuild -->
   </head>
   <body style="width: 500px;">
+    <h1>'Allo, 'Allo sasdfasdf asdfasd!</h1>
+    <a href="options.html" target="_blank">options page</a>
+
+    <button id="sendHelloButton">Send hello message to content script</button>
+    <button id="sendZoom">Send Zoom</button>
+
     <!-- build:js scripts/vendor.js -->
     <script src="scripts/vendor/jquery-2.1.3.min.js"></script>
     <!-- bower:js -->
@@ -19,6 +25,8 @@
 
     <!-- build:js scripts/popup.js -->
     <script src="scripts/popup.js"></script>
+    <script src="scripts/messageEmitter.js"></script>
+    <script src="scripts/emitterCommand.js"></script>
     <!-- endbuild -->
 
     <div id="up">
