@@ -8,11 +8,14 @@
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
     <link href="styles/main.css" rel="stylesheet">
+    <link href="styles/popup.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
-  <body style="width: 500px;">
+  <body>
     <h1>chrome-controller</h1>
     <a href="options.html" target="_blank">options page</a>
+
+    <button id="clearStorage">Clear</button>
 
     <div class="debugContainer">
       <label>Debug</label>
@@ -21,74 +24,74 @@
       <button id="navigateBackward">Nav Back</button>
     </div>
 
-      <!-- build:js scripts/vendor.js -->
+    <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
 
-    <div id="up">
+    <div id="up" class="binding-container">
       <label>up</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="left">
+    <div id="left" class="binding-container">
       <label>left</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="right">
+    <div id="right" class="binding-container">
       <label>right</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="down">
+    <div id="down" class="binding-container">
       <label>down</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="forward">
+    <div id="forward" class="binding-container">
       <label>forward</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="back">
+    <div id="back" class="binding-container">
       <label>back</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="next-tab">
+    <div id="next-tab" class="binding-container">
       <label>next tab</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="prev-tab">
+    <div id="prev-tab" class="binding-container">
       <label>previous tab</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="confirm">
+    <div id="confirm" class="binding-container">
       <label>confirm</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="cancel">
+    <div id="cancel" class="binding-container">
       <label>cancel</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
-    <div id="home">
+    <div id="home" class="binding-container">
       <label>home</label>
-      <span></span>
+      <div></div>
       <button>bind</button>
     </div>
 
