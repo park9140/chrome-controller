@@ -1,24 +1,22 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Popup');
+(function() {
+  var convertToId = function(str) {
+    return str;
+  }
 
-var convertToId = function(str) {
-  return str;
-}
+  var chromeControllerActions = [
+    'up', 'left', 'right', 'down',
+    'forward', 'back',
+    'next-tab', 'prev-tab',
+    'confirm', 'cancel',
+    'home'
+  ];
 
-var chromeControllerActions = [
-  'up', 'left', 'right', 'down',
-  'forward', 'back',
-  'next-tab', 'prev-tab',
-  'confirm', 'cancel',
-  'home'
-];
-
-$(document).ready(function() {
   chromeControllerActions.forEach(function(key, i) {
-    var div = $('#' + convertToId(key));
+    var div = document.getElementById(convertToId(key));
 
-    div.children('button').click(function() {
+    div.querySelector('button').addEventListener('click', function() {
       var setBindingFn = function(response) {
         console.log('callback called');
 
@@ -28,29 +26,27 @@ $(document).ready(function() {
           controller: response.controllerIndex,
           button: response.buttonIndex
         });
-        div.children('span').html('controller :' + response.controllerIndex + ', button: ' + response.buttonIndex);
+        div.querySelector('span').innerHTML = 'controller :' + response.controllerIndex + ', button: ' + response.buttonIndex;
       };
 
       chrome.runtime.sendMessage({ id: 'chromeController.getNextButton' }, setBindingFn);
     });
   });
 
-  chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(response) {
-    console.log(response);
+chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(response) {
+  console.log(response);
 
-    var controllers = Object.keys(response);
-    controllers.forEach(function(controller) {
-      var buttons = Object.keys(response[controller]);
-      buttons.forEach(function(button) {
-        var action = response[controller][button];
+  var controllers = Object.keys(response);
+  controllers.forEach(function(controller) {
+    var buttons = Object.keys(response[controller]);
+    buttons.forEach(function(button) {
+      var action = response[controller][button];
 
-        $('#' + convertToId(action)).children('span').html('controller :' + controller + ', button: ' + button);
-      });
+      document.getElementById(convertToId(action)).querySelector('span').innerHTML = 'controller :' + controller + ', button: ' + button;
     });
   });
 });
 
-(function() {
   document.getElementById('sendHelloButton')
           .addEventListener('click', function () {
             messageEmitter.sendMessageToCurrentTab("hello");
