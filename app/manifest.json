@@ -13,7 +13,8 @@
       "scripts/browserCommands.js",
       "scripts/chromereload.js",
       "scripts/background.js",
-      "scripts/messageEmitter.js"
+      "scripts/messageEmitter.js",
+      "scripts/emitterCommand.js"
     ]
   },
   "commands": {
