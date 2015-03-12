@@ -12,7 +12,6 @@ function findFocusables() {
 function buildFocusablesMap() {
   var focusableMap = new Map();
   var focusables = findFocusables();
-  console.log(focusables);
   for (var i=0; i < focusables.length; i ++){
     var focusElement = focusables[i];
     var rect = focusElement.getBoundingClientRect();
@@ -37,10 +36,23 @@ function unHighlightPreviousElements() {
   }
 }
 
+function findCurrentFocusableElement(focusableMap) {
+    var currentFocusedElement = document.activeElement;
+    if (currentFocusedElement.tagName.toLowerCase() === "body") {
+      for (var focusableElement of focusableMap.keys()) {
+        currentFocusedElement = focusableElement;
+        currentFocusedElement.focus();
+        break;
+      }
+    }
+    console.log(currentFocusedElement);
+    return currentFocusedElement;
+}
+
 function moveToNextElement(direction) {
   console.log(direction +' called');
   var focusableMap = buildFocusablesMap();
-  var currentFocusElement = document.activeElement;
+  var currentFocusElement = findCurrentFocusableElement(focusableMap);
   var currentFocusElementRect = currentFocusElement.getBoundingClientRect();
 
   var foundElement = null;
@@ -55,7 +67,6 @@ function moveToNextElement(direction) {
       }
     }
   });
-  console.log(closestElement);
   highlightElement(closestElement);
 }
 
