@@ -4,7 +4,7 @@ var bindings = {};
 
 chrome.storage.sync.get('bindings', function(response) {
   console.log('recieved bindings', response);
-  bindings = response.bindings;
+  bindings = response.bindings || {};
 });
 
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
