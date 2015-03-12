@@ -6,10 +6,11 @@ var commandFactory = (function() {
             var commandName = emitterCommand.commandName.toLowerCase();
             switch(commandName){
                 case "movefocus": {
-                    throw new Error("Unsupported command");
+                  return focusClientCommand;
+                  break;
                 }
                 case "browsernavigation": {
-                    browserNavigationClientCommand.execute(emitterCommand);
+                    return browserNavigationClientCommand;
                     break;
                 }
                 default: {

@@ -65,7 +65,10 @@
         "https://*/*"
       ],
       "js": [
+        "scripts/clientScripts/elementDistance.js",
+        "scripts/clientScripts/focusableElements.js",
         "scripts/clientScripts/contentscript.js",
+        "scripts/clientScripts/focusClientCommand.js",
         "scripts/clientScripts/browserNavigationClientCommand.js",
         "scripts/clientScripts/commandFactory.js",
         "scripts/emitterCommand.js"
