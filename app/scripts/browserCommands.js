@@ -33,19 +33,11 @@ document.addEventListener('chromeController.nextTab', onNextTab);
 chrome.commands.onCommand.addListener(function(command) {
     var tabEvent;
     switch (command) {
-        case 'nextTab':
-            tabEvent = new CustomEvent('chromeController.nextTab');
-            document.dispatchEvent(tabEvent);
-            break;
-        case 'previousTab':
-            tabEvent = new CustomEvent('chromeController.previousTab');
-            document.dispatchEvent(tabEvent);
-            break;
         case 'up':
         case 'down':
         case 'left':
         case 'right':
-            messageEmitter.sendMessageToCurrentTab(command);
+            messageEmitter.sendMove(command);
             break;
     }
 });

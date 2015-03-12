@@ -65,9 +65,9 @@
         "https://*/*"
       ],
       "js": [
-        "scripts/contentscript.js",
-        "scripts/browserNavigationClientCommand.js",
-        "scripts/commandFactory.js",
+        "scripts/clientScripts/contentscript.js",
+        "scripts/clientScripts/browserNavigationClientCommand.js",
+        "scripts/clientScripts/commandFactory.js",
         "scripts/emitterCommand.js"
       ],
       "css" : ["styles/content.css"],

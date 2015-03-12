@@ -5,7 +5,7 @@ var commandFactory = (function() {
         getCommand: function(emitterCommand) {
             var commandName = emitterCommand.commandName.toLowerCase();
             switch(commandName){
-                case "move": {
+                case "movefocus": {
                     throw new Error("Unsupported command");
                 }
                 case "browsernavigation": {
