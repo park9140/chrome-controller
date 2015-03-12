@@ -1,14 +1,18 @@
 'use strict';
 
-var currentHighlightedElement;
 
 function findFocusables() {
-  return document.querySelectorAll('input:not(:disabled):not([readonly]):not([type=hidden]):not([type=checkbox])');
+  var inputElementSelector = 'input:not(:disabled):not([readonly]):not([type=hidden]):not([type=checkbox])';
+  return document.querySelectorAll(inputElementSelector
+                                   + ',[tabindex]'
+                                   + ',button:not([disabled])'
+                                   + ',a[href]');
 }
 
 function buildFocusablesMap() {
   var focusableMap = new Map();
   var focusables = findFocusables();
+  console.log(focusables);
   for (var i=0; i < focusables.length; i ++){
     var focusElement = focusables[i];
     var rect = focusElement.getBoundingClientRect();
@@ -50,6 +54,7 @@ function moveToNextElement(direction) {
       }
     }
   });
+  console.log(closestElement);
   highlightElement(closestElement);
 }
 
