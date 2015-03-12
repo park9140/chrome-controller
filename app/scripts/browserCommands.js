@@ -17,9 +17,6 @@ function onPreviousTab() {
         });
     });
 }
-
-document.addEventListener('chromeController.previousTab', onPreviousTab);
-
 function onNextTab() {
     getActiveTabIndex(function(activeTabIndex){
         getTabByIndex(++activeTabIndex, function (tab) {
@@ -28,24 +25,42 @@ function onNextTab() {
     });
 }
 
-document.addEventListener('chromeController.nextTab', onNextTab);
+chrome.runtime.onMessage.addListener(function(e, sender, callback) {
+  console.log('controller.js - chrome event recieved: ', e);
+  var message = e.id.split('.')[1];
+  switch(message) {
+      case 'up':
+      case 'down':
+      case 'right':
+      case 'left':
+          messageEmitter.sendMove(message);
+          break;
+      case 'forward':
+          messageEmitter.sendNavigation('forward');
+      case 'back':
+          messageEmitter.sendNavigation('backward');
+          break;
+      case 'next-tab':
+          onNextTab();
+          break;
+      case 'prev-tab':
+          onPreviousTab();
+          break;
+      case 'confirm':
+      case 'cancel':
+      case 'home':
+          break;
+  }
+});
 
 chrome.commands.onCommand.addListener(function(command) {
     var tabEvent;
     switch (command) {
-        case 'nextTab':
-            tabEvent = new CustomEvent('chromeController.nextTab');
-            document.dispatchEvent(tabEvent);
-            break;
-        case 'previousTab':
-            tabEvent = new CustomEvent('chromeController.previousTab');
-            document.dispatchEvent(tabEvent);
-            break;
         case 'up':
         case 'down':
         case 'left':
         case 'right':
-            messageEmitter.sendMessageToCurrentTab(command);
+            messageEmitter.sendMove(command);
             break;
     }
 });

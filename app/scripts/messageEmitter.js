@@ -10,9 +10,12 @@ var messageEmitter = (function() {
       sendMessageToCurrentTab: function(data) {
         sendMessage(data);
       },
-      sendZoom: function(direction) {
-        var level = direction ? 10 : -10;
-        var message = new emitterCommand('zoom').addParam('level', level);
+      sendMove: function(direction) {
+          var message = new emitterCommand('moveFocus').addParam('direction', direction);
+          sendMessage(message);
+      },
+      sendNavigation: function(direction) {
+        var message = new emitterCommand('browserNavigation').addParam('direction', direction);
         sendMessage(message);
       }
     }

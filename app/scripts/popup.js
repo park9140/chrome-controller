@@ -63,13 +63,19 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
             messageEmitter.sendMessageToCurrentTab("hello");
   });
 
-  document.getElementById('sendZoom')
-    .addEventListener('click', function() {
-      messageEmitter.sendZoom();
-    });
-
   document.getElementById('clearStorage')
     .addEventListener('click', function() {
       chrome.runtime.sendMessage({ id: 'chromeController.clearBindings' });
     });
+
+  document.getElementById('navigateForward')
+          .addEventListener('click', function () {
+            messageEmitter.sendNavigation("forward");
+  });
+
+  document.getElementById('navigateBackward')
+          .addEventListener('click', function () {
+            messageEmitter.sendNavigation("backward");
+  });
+  
 })();

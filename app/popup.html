@@ -12,12 +12,17 @@
     <!-- endbuild -->
   </head>
   <body>
-    <h1>'Allo, 'Allo sasdfasdf asdfasd!</h1>
+    <h1>chrome-controller</h1>
     <a href="options.html" target="_blank">options page</a>
 
-    <button id="sendHelloButton">Send hello message to content script</button>
-    <button id="sendZoom">Send Zoom</button>
     <button id="clearStorage">Clear</button>
+
+    <div class="debugContainer">
+      <label>Debug</label>
+      <button id="sendHelloButton">Send hello message to content script</button>
+      <button id="navigateForward">Nav Forward</button>
+      <button id="navigateBackward">Nav Back</button>
+    </div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
