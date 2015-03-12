@@ -13,6 +13,8 @@
       "scripts/browserCommands.js",
       "scripts/chromereload.js",
       "scripts/background.js",
+      "scripts/controller.js",
+      "scripts/keyBindings.js",
       "scripts/messageEmitter.js",
       "scripts/emitterCommand.js"
     ]
@@ -67,6 +69,7 @@
         "scripts/elementDistance.js",
         "scripts/focusableElements.js"
       ],
+      "css" : ["styles/content.css"],
       "run_at": "document_end",
       "all_frames": false
     }
