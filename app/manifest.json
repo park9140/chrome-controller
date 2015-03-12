@@ -33,7 +33,8 @@
         "https://*/*"
       ],
       "js": [
-        "scripts/contentscript.js"
+        "scripts/contentscript.js",
+        "scripts/focusable-elements.js"
       ],
       "run_at": "document_end",
       "all_frames": false
