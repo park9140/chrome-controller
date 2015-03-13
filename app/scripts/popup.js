@@ -7,7 +7,7 @@
 
   var chromeControllerActions = [
     'up', 'left', 'right', 'down',
-    'forward', 'back',
+    'forward', 'back', 'active-tab-reload'
     'next-tab', 'prev-tab',
     'confirm', 'cancel',
     'home'
@@ -82,5 +82,5 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
     .addEventListener('click', function() {
       messageEmitter.sendToggleFullScreen();
     });
-  
+
 })();

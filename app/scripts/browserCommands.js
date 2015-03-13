@@ -25,6 +25,14 @@ function onNextTab() {
     });
 }
 
+function onReloadTab() {
+    getActiveTabIndex(function(activeTabIndex){
+        getTabByIndex(activeTabIndex, function (tab) {
+            chrome.tabs.reload(tab.id);
+        });
+    });
+}
+
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
@@ -40,6 +48,9 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           break;
       case 'back':
           messageEmitter.sendNavigation('backward');
+          break;
+      case 'active-tab-reload'
+          onReloadTab();
           break;
       case 'next-tab':
           onNextTab();
