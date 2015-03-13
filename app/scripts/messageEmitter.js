@@ -25,6 +25,18 @@ var messageEmitter = (function() {
       sendToggleFullScreen: function() {
         var message = new emitterCommand('togglefullscreen');
         sendMessage(message);
+      },
+      sendToggleKeyboard: function() {
+        var message = new emitterCommand('togglekeyboard');
+        sendMessage(message);
+      },
+      sendHighlightCell: function(cellToHighlight) {
+        var message = new emitterCommand('highlightcell').addParam('cellToHighlight', cellToHighlight);
+        sendMessage(message);
+      },
+      sendKeyboardPress: function(direction) {
+        var message = new emitterCommand('keypress').addParam('direction', direction);
+        sendMessage(message);
       }
     }
 })();

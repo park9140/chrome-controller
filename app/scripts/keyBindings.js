@@ -1,6 +1,7 @@
 'use strict';
 
 var bindings = {};
+var mode = '';
 
 chrome.storage.sync.get('bindings', function(response) {
   console.log('recieved bindings', response);
@@ -12,10 +13,20 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
 
   switch(e.id) {
     case 'chromeController.setBinding':
+      var action = e.action;
+      if (action.startsWith('keyboard-')) {
+        action = action.replace('-', '.');
+      }
+
       bindings[e.controller] = bindings[e.controller] || {};
       bindings[e.controller][e.button] = bindings[e.controller][e.button] || [];
-      bindings[e.controller][e.button].push(e.action);
+      bindings[e.controller][e.button].push(action);
       chrome.storage.sync.set({ bindings: bindings });
+
+      if (action === 'toggle-keyboard') {
+        e.action = 'keyboard-' + e.action;
+        chrome.runtime.sendMessage(e);
+      }
       break;
     case 'chromeController.getBindings':
       callback(bindings);
@@ -24,12 +35,28 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
       chrome.storage.sync.set({ bindings: {} });
       bindings = {};
       break;
+    case 'chromeController.toggle-keyboard':
+    case 'chromeController.keyboard.toggle-keyboard':
+      mode = mode === 'keyboard' ? '' : 'keyboard';
+      messageEmitter.sendToggleKeyboard();
     case 'controller.buttonPressed':
       var actions = bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex];
       if (actions) {
-        console.log('translating button event into extension event', e, actions);
+        console.log('translating button event into extension event', e, mode, actions);
         actions.forEach(function(action) {
-          chrome.runtime.sendMessage({ id: 'chromeController.' + action });
+          if (!mode && !action.includes('.') || action.split('.')[0] == mode) {
+            chrome.runtime.sendMessage({ id: 'chromeController.' + action });
+          }
+        });
+      }
+      break;
+    case 'controller.buttonUnpressed':
+      var actions = bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex];
+      if (actions) {
+        actions.forEach(function(action) {
+          if (action.split('.')[0] == 'keyboard') {
+            chrome.runtime.sendMessage({ id: 'chromeController.' + action + '.unpress' });
+          }
         });
       }
       break;

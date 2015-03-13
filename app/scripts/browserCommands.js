@@ -36,33 +36,33 @@ function onReloadTab() {
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
-  switch(message) {
-      case 'up':
-      case 'down':
-      case 'right':
-      case 'left':
+  switch(e.id) {
+      case 'chromeController.up':
+      case 'chromeController.down':
+      case 'chromeController.right':
+      case 'chromeController.left':
           messageEmitter.sendMove(message);
           break;
-      case 'forward':
+      case 'chromeController.forward':
           messageEmitter.sendNavigation('forward');
           break;
-      case 'back':
+      case 'chromeController.back':
           messageEmitter.sendNavigation('backward');
           break;
-      case 'active-tab-reload':
+      case 'chromeController.active-tab-reload':
           onReloadTab();
           break;
-      case 'next-tab':
+      case 'chromeController.next-tab':
           onNextTab();
           break;
-      case 'prev-tab':
+      case 'chromeController.prev-tab':
           onPreviousTab();
           break;
-      case 'confirm':
+      case 'chromeController.confirm':
           messageEmitter.sendSelect();
           break;
-      case 'cancel':
-      case 'home':
+      case 'chromeController.cancel':
+      case 'chromeController.home':
           break;
   }
 });

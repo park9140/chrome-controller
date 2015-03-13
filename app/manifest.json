@@ -16,7 +16,8 @@
       "scripts/controller.js",
       "scripts/keyBindings.js",
       "scripts/messageEmitter.js",
-      "scripts/emitterCommand.js"
+      "scripts/emitterCommand.js",
+      "scripts/keyboard.js"
     ]
   },
   "commands": {
@@ -73,7 +74,11 @@
         "scripts/clientScripts/selectClientCommand.js",
         "scripts/clientScripts/commandFactory.js",
         "scripts/clientScripts/browserFullScreenClientCommand.js",
-        "scripts/emitterCommand.js"
+        "scripts/emitterCommand.js",
+        "scripts/clientScripts/keyboard.js",
+        "scripts/clientScripts/toggleKeyboardClientCommand.js",
+        "scripts/clientScripts/highlightCellClientCommand.js",
+        "scripts/clientScripts/keyboardPressClientCommand.js"
       ],
       "css" : ["styles/content.css"],
       "run_at": "document_end",

@@ -27,6 +27,13 @@ function getPollFn(gamepadIndex) {
           getInputCallback(eventData);
           getInputCallback = undefined;
         }
+      } else if (!button.pressed && lastGamepad.buttons[i]) {
+        chrome.runtime.sendMessage({
+          id: 'controller.buttonUnpressed',
+          controllerIndex: gamepadIndex,
+          buttonIndex: i,
+          value: button.value
+        });
       }
       lastGamepad.buttons[i] = button.pressed;
     });

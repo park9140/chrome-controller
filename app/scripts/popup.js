@@ -1,20 +1,19 @@
 'use strict';
 
 (function() {
-  var convertToId = function(str) {
-    return str;
-  }
-
   var chromeControllerActions = [
     'up', 'left', 'right', 'down',
     'forward', 'back', 'active-tab-reload',
     'next-tab', 'prev-tab',
     'confirm', 'cancel',
-    'home'
+    'home',
+    'toggle-keyboard',
+    'keyboard-up', 'keyboard-left', 'keyboard-right', 'keyboard-down',
+    'keyboard-north', 'keyboard-west', 'keyboard-east', 'keyboard-south'
   ];
 
   chromeControllerActions.forEach(function(key, i) {
-    var div = document.getElementById(convertToId(key));
+    var div = document.getElementById(key);
 
     div.querySelector('button').addEventListener('click', function() {
       var setBindingFn = function(response) {
@@ -52,7 +51,11 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
         var spanNode = document.createElement('span');
 
         spanNode.appendChild(textNode);
-        document.getElementById(convertToId(action)).querySelector('div').appendChild(spanNode);
+        console.log(action);
+        var elem = document.getElementById(action.replace('.', '-'));
+        if (elem) {
+          elem.querySelector('div').appendChild(spanNode);
+        }
       });
     });
   });

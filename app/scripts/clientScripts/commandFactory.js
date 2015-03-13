@@ -21,6 +21,18 @@ var commandFactory = (function() {
                     return browserFullScreenClientCommand;
                     break;
                 }
+                case "togglekeyboard": {
+                    return toggleKeyboardClientCommand;
+                    break;
+                }
+                case "highlightcell": {
+                    return highlightCellClientCommand;
+                    break;
+                }
+                case "keypress": {
+                    return keyboardPressClientCommand;
+                    break;
+                }
                 default: {
                     throw new Error("Unsupported command " + commandName);
                 }
