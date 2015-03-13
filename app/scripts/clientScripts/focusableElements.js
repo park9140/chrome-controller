@@ -77,8 +77,14 @@ window.addEventListener('load', function() {
 
   var focusElement = document.createElement('div');
   focusElement.classList.add('controller-focus');
-  document.querySelector('body').appendChild(focusElement);
+  var body = document.querySelector('body');
+  body.appendChild(focusElement);
   setInterval(function() {
+    if (element ===  body) {
+      focusElement.style.display = 'none';
+      return;
+    }
+    focusElement.style.display = 'block';
     var element = document.activeElement;
     var rect = element.getBoundingClientRect();
     focusElement.style.top = rect.top + 'px';

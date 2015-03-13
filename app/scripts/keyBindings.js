@@ -24,12 +24,27 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
       chrome.storage.sync.set({ bindings: {} });
       bindings = {};
       break;
+    case 'chromeController.clearBinding':
+      if (bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex] && bindings[e.controllerIndex][e.buttonIndex].indexOf(e.action) > -1) {
+        var indexOfAction = bindings[e.controllerIndex][e.buttonIndex].indexOf(e.action);
+        bindings[e.controllerIndex][e.buttonIndex].splice(indexOfAction, 1);
+        if(bindings[e.controllerIndex][e.buttonIndex].length === 0) {
+          delete bindings[e.controllerIndex][e.buttonIndex];
+          if(Object.keys(bindings[e.controllerIndex]).length === 0) {
+            delete bindings[e.controllerIndex];
+          }
+        }
+      }
+
+      chrome.storage.sync.set({ bindings: bindings });
+
+      break;
     case 'controller.buttonPressed':
       var actions = bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex];
       if (actions) {
         console.log('translating button event into extension event', e, actions);
         actions.forEach(function(action) {
-          chrome.runtime.sendMessage({ id: 'chromeController.' + action });
+          chrome.runtime.sendMessage({ id: 'chromeController.' + action, playerId: e.controllerIndex });
         });
       }
       break;
