@@ -3,7 +3,8 @@ var selectClientCommand = (function() {
 
     return {
         execute: function(emitterCommand) {
-            selectCurrentFocus();
+            var playerId = emitterCommand.getParam("playerId");
+            selectCurrentFocus(playerId);
         }
     }
 })();

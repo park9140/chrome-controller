@@ -10,16 +10,16 @@ var messageEmitter = (function() {
       sendMessageToCurrentTab: function(data) {
         sendMessage(data);
       },
-      sendMove: function(direction) {
-          var message = new emitterCommand('moveFocus').addParam('direction', direction);
+      sendMove: function(direction, playerId) {
+          var message = new emitterCommand('moveFocus').addParam('direction', direction).addParam('playerId', playerId);
           sendMessage(message);
       },
       sendNavigation: function(direction) {
         var message = new emitterCommand('browserNavigation').addParam('direction', direction);
         sendMessage(message);
       },
-      sendSelect: function() {
-        var message = new emitterCommand('confirmSelection');
+      sendSelect: function(playerId) {
+        var message = new emitterCommand('confirmSelection').addParam('playerId', playerId);
         sendMessage(message);
       },
       sendToggleFullScreen: function() {

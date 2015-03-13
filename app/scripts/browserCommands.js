@@ -36,12 +36,13 @@ function onReloadTab() {
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
+  var playerId = e.playerId;
   switch(message) {
       case 'up':
       case 'down':
       case 'right':
       case 'left':
-          messageEmitter.sendMove(message);
+          messageEmitter.sendMove(message, playerId);
           break;
       case 'forward':
           messageEmitter.sendNavigation('forward');
@@ -59,7 +60,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           onPreviousTab();
           break;
       case 'confirm':
-          messageEmitter.sendSelect();
+          messageEmitter.sendSelect(playerId);
           break;
       case 'cancel':
       case 'home':

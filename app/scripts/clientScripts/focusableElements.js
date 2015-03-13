@@ -19,24 +19,24 @@ function buildFocusablesMap() {
   }
   return focusableMap;
 }
+var players = {};
+function findCurrentFocusableElement(focusableMap, playerId) {
+    var player = players[playerId] = players[playerId] || createPlayer(playerId);
 
-function findCurrentFocusableElement(focusableMap) {
-    var currentFocusedElement = document.activeElement;
-    if (currentFocusedElement.tagName.toLowerCase() === "body") {
+    if(!player.focus) {
       for (var focusableElement of focusableMap.keys()) {
-        currentFocusedElement = focusableElement;
-        currentFocusedElement.focus();
+        player.focus = focusableElement;
         break;
       }
     }
-    console.log(currentFocusedElement);
-    return currentFocusedElement;
+    console.log(player.focus);
+    return player.focus;
 }
 
-function moveToNextElement(direction) {
+function moveToNextElement(direction, playerId) {
   console.log(direction +' called');
   var focusableMap = buildFocusablesMap();
-  var currentFocusElement = findCurrentFocusableElement(focusableMap);
+  var currentFocusElement = findCurrentFocusableElement(focusableMap, playerId);
   var currentFocusElementRect = currentFocusElement.getBoundingClientRect();
 
   var foundElement = null;
@@ -53,7 +53,7 @@ function moveToNextElement(direction) {
   });
 
   if (closestElement) {
-    closestElement.focus();
+    players[playerId].focus = closestElement;
   }
 }
 
@@ -73,28 +73,35 @@ function isThisElementLocatedInTheDirection(direction, elementRectangle, current
       break;
   }
 }
-window.addEventListener('load', function() {
 
+function createPlayer(playerId) {
   var focusElement = document.createElement('div');
   focusElement.classList.add('controller-focus');
+  focusElement.classList.add('player-' + playerId);
   var body = document.querySelector('body');
   body.appendChild(focusElement);
+  var player = {
+  };
   setInterval(function() {
-    if (element ===  body) {
+    if (!player.focus || !document.contains(player.focus)) {
       focusElement.style.display = 'none';
+      delete player.focus;
       return;
     }
     focusElement.style.display = 'block';
-    var element = document.activeElement;
+    var element = player.focus;
     var rect = element.getBoundingClientRect();
     focusElement.style.top = rect.top + 'px';
     focusElement.style.height = rect.height + 'px';
     focusElement.style.width = rect.width + 'px';
     focusElement.style.left = rect.left + 'px';
   }, 30);
-})
+  return player;
+}
 
-function selectCurrentFocus() {
-    var target = document.activeElement;
-    target.click();
+function selectCurrentFocus(playerId) {
+    var target = players[playerId] ?  players[playerId].focus : undefined;
+    if(target) {
+      target.click();
+    }
 }
