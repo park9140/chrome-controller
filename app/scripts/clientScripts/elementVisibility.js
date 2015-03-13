@@ -1,8 +1,9 @@
 var elementVisibility = (function() {
 
   var isElementVisible = function(element, elementRect) {
-    var x = elementRect.left + 1;
-    var y = elementRect.top + 1;
+    var centerPosition = elementDistance.getPositionAtCenter(elementRect);
+    var x = centerPosition.x;
+    var y = centerPosition.y;
     var elementFound = document.elementFromPoint(x, y);
     return (elementFound !== null && element === elementFound);
   }
