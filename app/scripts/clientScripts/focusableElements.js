@@ -26,6 +26,7 @@ function highlightElement(element) {
     unHighlightPreviousElements();
     element.classList.add('controller-focus');
     element.focus();
+    element.scrollIntoViewIfNeeded();
   }
 }
 

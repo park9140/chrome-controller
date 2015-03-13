@@ -70,5 +70,6 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
 
 window.addEventListener('gamepadconnected', function(e) {
   console.log('gamepad connected');
+  chrome.browserAction.setBadgeText({text: ''});
   setInterval(getPollFn(e.gamepad.index), 10);
 });

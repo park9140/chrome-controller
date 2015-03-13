@@ -78,4 +78,9 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
             messageEmitter.sendNavigation("backward");
   });
 
+  document.getElementById('fullScreen')
+    .addEventListener('click', function() {
+      messageEmitter.sendToggleFullScreen();
+    });
+  
 })();

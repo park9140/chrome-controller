@@ -21,6 +21,10 @@ var messageEmitter = (function() {
       sendSelect: function() {
         var message = new emitterCommand('confirmSelection');
         sendMessage(message);
+      },
+      sendToggleFullScreen: function() {
+        var message = new emitterCommand('togglefullscreen');
+        sendMessage(message);
       }
     }
 })();

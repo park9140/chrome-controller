@@ -4,8 +4,8 @@
   "manifest_version": 2,
   "description": "Control chrome from any game pad",
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "images/Chrome_Controller_16.png",
+    "128": "images/Chrome_Controller_128.png"
   },
   "default_locale": "en",
   "background": {
@@ -48,8 +48,8 @@
   },
   "browser_action": {
     "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+      "19": "images/Chrome_Controller_19.png",
+      "38": "images/Chrome_Controller_38.png"
     },
     "default_title": "chrome controller",
     "default_popup": "popup.html"
@@ -72,6 +72,7 @@
         "scripts/clientScripts/browserNavigationClientCommand.js",
         "scripts/clientScripts/selectClientCommand.js",
         "scripts/clientScripts/commandFactory.js",
+        "scripts/clientScripts/browserFullScreenClientCommand.js",
         "scripts/emitterCommand.js"
       ],
       "css" : ["styles/content.css"],
