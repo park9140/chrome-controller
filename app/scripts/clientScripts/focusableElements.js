@@ -43,7 +43,8 @@ function moveToNextElement(direction) {
   var prevDistance = 999999999;
   var closestElement = null;
   focusableMap.forEach(function(elementRectangle, element, map){
-    if (isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)){
+    if (elementVisibility.isElementVisible(element, elementRectangle)
+        && isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)){
       var currentDistance = elementDistance.getDistanceBetweenElements(currentFocusElementRect, elementRectangle);
       if(currentDistance < prevDistance) {
         closestElement = element;
