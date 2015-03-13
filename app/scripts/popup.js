@@ -10,7 +10,7 @@
     'forward', 'back', 'active-tab-reload',
     'next-tab', 'prev-tab',
     'confirm', 'cancel',
-    'home', 'new-tab'
+    'home', 'new-tab', 'close-tab'
   ];
 
   function addKeybind(key, controllerIndex, buttonIndex) {
