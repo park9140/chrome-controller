@@ -42,8 +42,10 @@ function findCurrentFocusableElement(focusableMap, playerId) {
 
     if(!player.focus) {
       for (var focusableElement of focusableMap.keys()) {
-        player.focus = focusableElement;
-        break;
+        if (elementVisibility.isElementVisible(focusableElement, focusableElement.getBoundingClientRect())) {
+          player.focus = focusableElement;
+          break;
+        }
       }
     }
     console.log(player.focus);
