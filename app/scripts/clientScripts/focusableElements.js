@@ -20,22 +20,6 @@ function buildFocusablesMap() {
   return focusableMap;
 }
 
-function highlightElement(element) {
-  if (element) {
-    unHighlightPreviousElements();
-    element.classList.add('controller-focus');
-    element.focus();
-    element.scrollIntoViewIfNeeded();
-  }
-}
-
-function unHighlightPreviousElements() {
-  var highlightedElements = document.querySelectorAll('.controller-focus');
-  for(var i=0; i < highlightedElements.length; i++) {
-    highlightedElements[i].classList.remove('controller-focus');
-  }
-}
-
 function findCurrentFocusableElement(focusableMap) {
     var currentFocusedElement = document.activeElement;
     if (currentFocusedElement.tagName.toLowerCase() === "body") {
@@ -67,7 +51,10 @@ function moveToNextElement(direction) {
       }
     }
   });
-  highlightElement(closestElement);
+
+  if (closestElement) {
+    closestElement.focus();
+  }
 }
 
 function isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect){
@@ -86,6 +73,20 @@ function isThisElementLocatedInTheDirection(direction, elementRectangle, current
       break;
   }
 }
+window.addEventListener('load', function() {
+
+  var focusElement = document.createElement('div');
+  focusElement.classList.add('controller-focus');
+  document.querySelector('body').appendChild(focusElement);
+  setInterval(function() {
+    var element = document.activeElement;
+    var rect = element.getBoundingClientRect();
+    focusElement.style.top = rect.top + 'px';
+    focusElement.style.height = rect.height + 'px';
+    focusElement.style.width = rect.width + 'px';
+    focusElement.style.left = rect.left + 'px';
+  }, 30);
+})
 
 function selectCurrentFocus() {
     var target = document.activeElement;

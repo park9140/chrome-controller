@@ -1,3 +1,7 @@
 .controller-focus {
-    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .75) !important;
+    position: fixed;
+    pointer-events: none;
+    background: rgba(200, 0, 0, .1);
+    box-shadow: 0px 0px 15px 5px rgba(200, 0, 0, .75) !important;
+    z-index: 10000000000000000000;
 }
