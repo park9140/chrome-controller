@@ -33,15 +33,30 @@ function onReloadTab() {
     });
 }
 
+function createNewTab() {
+
+    chrome.tabs.create({url: chrome.extension.getURL('/popup.html')});
+
+}
+
+function closeTab() {
+    getActiveTabIndex(function(activeTabIndex){
+        getTabByIndex(activeTabIndex, function (tab) {
+            chrome.tabs.remove(tab.id);
+        });
+    });
+}
+
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
+  var playerId = e.playerId;
   switch(message) {
       case 'up':
       case 'down':
       case 'right':
       case 'left':
-          messageEmitter.sendMove(message);
+          messageEmitter.sendMove(message, playerId);
           break;
       case 'forward':
           messageEmitter.sendNavigation('forward');
@@ -59,7 +74,18 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           onPreviousTab();
           break;
       case 'confirm':
-          messageEmitter.sendSelect();
+          messageEmitter.sendSelect(playerId);
+          break;
+      case 'new-tab':
+          createNewTab();
+          break;
+      case 'scroll-vertical':
+          messageEmitter.scroll('vertical', e.actionValue);
+          break;
+      case 'scroll-horizontal':
+          messageEmitter.scroll('horizontal', e.actionValue);
+      case 'close-tab':
+          closeTab();
           break;
       case 'cancel':
       case 'home':

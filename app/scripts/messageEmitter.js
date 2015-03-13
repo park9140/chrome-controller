@@ -5,21 +5,31 @@ var messageEmitter = (function() {
         chrome.tabs.sendMessage(tabs[0].id, data);
       });
     }
+  var scrolling;
 
     return {
+      scroll: function(direction, multiplier) {
+        if(scrolling) {
+          return;
+        }
+        scrolling = setTimeout(function() { scrolling = false }, 50);
+        console.log(multiplier, direction, 'scroll');
+        var message = new emitterCommand('scroll').addParam('multiplier', multiplier).addParam('direction', direction);
+        sendMessage(message);
+      },
       sendMessageToCurrentTab: function(data) {
         sendMessage(data);
       },
-      sendMove: function(direction) {
-          var message = new emitterCommand('moveFocus').addParam('direction', direction);
+      sendMove: function(direction, playerId) {
+          var message = new emitterCommand('moveFocus').addParam('direction', direction).addParam('playerId', playerId);
           sendMessage(message);
       },
       sendNavigation: function(direction) {
         var message = new emitterCommand('browserNavigation').addParam('direction', direction);
         sendMessage(message);
       },
-      sendSelect: function() {
-        var message = new emitterCommand('confirmSelection');
+      sendSelect: function(playerId) {
+        var message = new emitterCommand('confirmSelection').addParam('playerId', playerId);
         sendMessage(message);
       },
       sendToggleFullScreen: function() {

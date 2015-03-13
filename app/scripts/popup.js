@@ -10,43 +10,59 @@
     'forward', 'back', 'active-tab-reload',
     'next-tab', 'prev-tab',
     'confirm', 'cancel',
-    'home'
+    'home', 'new-tab', 'close-tab'
   ];
 
-  function addKeybind(key, controllerIndex, buttonIndex) {
+  var controllerAxisActions = [
+    'scroll-vertical', 'scroll-horizontal'
+  ];
+
+  function addKeybind(key, controllerIndex, actionId) {
         var div = document.getElementById(convertToId(key));
-        var textNode = document.createTextNode('ctrl :' + controllerIndex + ', btn: ' + buttonIndex);
+        var textNode = document.createTextNode('ctrl :' + controllerIndex + ', btn: ' + actionId);
         var spanNode = document.createElement('span');
 
         spanNode.appendChild(textNode);
         spanNode.classList.add('keybind');
         spanNode.addEventListener('click', function() {
-          chrome.runtime.sendMessage({ id: 'chromeController.clearBinding', action: key, controllerIndex: controllerIndex, buttonIndex: buttonIndex });
+          chrome.runtime.sendMessage({ id: 'chromeController.clearBinding', action: key, controllerIndex: controllerIndex, actionId: actionId });
           div.querySelector('div').removeChild(spanNode);
         });
         div.querySelector('div').appendChild(spanNode);
   };
 
-  chromeControllerActions.forEach(function(key, i) {
+  function buildInterface(key, i, bindAxis) {
     var div = document.getElementById(convertToId(key));
 
     div.querySelector('button').addEventListener('click', function() {
-      var setBindingFn = function(response) {
+      var setBindingFn = function(response, axisResponse) {
         console.log('callback called');
+        if(bindAxis) {
+          response = response.axisData;
+        } else {
+          response = response.buttonData;
+        }
 
         chrome.runtime.sendMessage({
           id: 'chromeController.setBinding',
           action: key,
           controller: response.controllerIndex,
-          button: response.buttonIndex
+          button: response.actionId
         });
-        addKeybind(key, response.controllerIndex, response.buttonIndex);
+        addKeybind(key, response.controllerIndex, response.actionId);
       };
 
       chrome.runtime.sendMessage({ id: 'chromeController.getNextInput' }, setBindingFn);
     });
+  }
+
+  chromeControllerActions.forEach(function(key, i) {
+    buildInterface(key, i);
   });
 
+  controllerAxisActions.forEach(function(key, i) {
+    buildInterface(key, i, true);
+  });
 chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(response) {
   console.log(response);
 
@@ -71,6 +87,7 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
   document.getElementById('clearStorage')
     .addEventListener('click', function() {
       chrome.runtime.sendMessage({ id: 'chromeController.clearBindings' });
+      window.location.reload();
     });
 
   document.getElementById('navigateForward')

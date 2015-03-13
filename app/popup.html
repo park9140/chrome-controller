@@ -9,6 +9,7 @@
     <!-- build:css styles/main.css -->
     <link href="styles/main.css" rel="stylesheet">
     <link href="styles/popup.css" rel="stylesheet">
+    <link href="styles/content.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body>
@@ -33,7 +34,6 @@
     <div id="pageElements" class="group-container">
       <label>Page Element Navigation</label>
       <div></div>
-    
       <div id="up" class="binding-container">
         <label>Up</label>
         <div></div>
@@ -72,10 +72,27 @@
 
     </div>
 
-    <div id="browserCommands" class="group-container">
+    <div id="browserScrolling" class="group-container">
+      <label>Browser Scrolling</label>
+      <div></div>
+
+      <div id="scroll-vertical" class="binding-container">
+        <label>Bind an axis to vertical scrolling</label>
+        <div></div>
+        <button>bind</button>
+      </div>
+
+      <div id="scroll-horizontal" class="binding-container">
+        <label>Bind an axis to horizontal scrolling</label>
+        <div></div>
+        <button>bind</button>
+      </div>
+    </div>
+
+     <div id="browserCommands" class="group-container">
       <label>Browser Commands and Navigation</label>
       <div></div>
-    
+
       <div id="forward" class="binding-container">
         <label>Forward (Browser Forward Button)</label>
         <div></div>
@@ -110,17 +127,35 @@
         <label>Home (Load your Home Page)</label>
         <div></div>
         <button>bind</button>
+      </div>
+
+      <div id="new-tab" class="binding-container">
+        <label>Open a New Tab</label>
+        <div></div>
+        <button>bind</button>
+      </div>
+
+      <div id="close-tab" class="binding-container">
+        <label>Close Current Tab</label>
+        <div></div>
+        <button>bind</button>
+      </div>
     </div>
-    </div>
-
-
-
-
 
     <!-- build:js scripts/popup.js -->
     <script src="scripts/popup.js"></script>
     <script src="scripts/messageEmitter.js"></script>
     <script src="scripts/emitterCommand.js"></script>
+    <script src="scripts/clientScripts/elementDistance.js"></script>
+    <script src= "scripts/clientScripts/elementVisibility.js"></script>
+    <script src= "scripts/clientScripts/focusableElements.js"></script>
+    <script src="scripts/clientScripts/contentscript.js"></script>
+    <script src="scripts/clientScripts/focusClientCommand.js"></script>
+    <script src="scripts/clientScripts/browserNavigationClientCommand.js"></script>
+    <script src="scripts/clientScripts/selectClientCommand.js"></script>
+    <script src="scripts/clientScripts/scrollClientCommand.js"></script>
+    <script src="scripts/clientScripts/commandFactory.js"></script>
+    <script src="scripts/clientScripts/browserFullScreenClientCommand.js"></script>
     <!-- endbuild -->
   </body>
 </html>
