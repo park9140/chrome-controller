@@ -59,8 +59,10 @@ function moveToNextElement(direction) {
   var prevDistance = 999999999;
   var closestElement = null;
   focusableMap.forEach(function(elementRectangle, element, map){
-    if (elementVisibility.isElementVisible(element, elementRectangle) && isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)
-        && isRectangleInSamePlaneAsFocusedRectangle(currentFocusElementRect, elementRectangle, direction)){
+    if (elementVisibility.isElementVisible(element, elementRectangle)
+        && isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)
+        && isRectangleInSamePlaneAsFocusedRectangle(currentFocusElementRect, elementRectangle, direction)
+        ){
       var currentDistance = elementDistance.getDistanceBetweenElements(currentFocusElementRect, elementRectangle);
       if(currentDistance < prevDistance) {
         closestElement = element;
@@ -77,16 +79,16 @@ function moveToNextElement(direction) {
 function isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect){
   switch (direction) {
     case "up" :
-      return elementRectangle.bottom < currentFocusElementRect.top;
+      return elementRectangle.bottom <= currentFocusElementRect.top;
       break;
     case "down":
-      return (elementRectangle.top > currentFocusElementRect.bottom);
+      return (elementRectangle.top >= currentFocusElementRect.bottom);
       break;
     case "left":
-      return (elementRectangle.right < currentFocusElementRect.left);
+      return (elementRectangle.right <= currentFocusElementRect.left);
       break;
     case "right":
-      return (elementRectangle.left > currentFocusElementRect.right);
+      return (elementRectangle.left >= currentFocusElementRect.right);
       break;
   }
 }
