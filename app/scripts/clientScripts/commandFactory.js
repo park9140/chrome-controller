@@ -33,6 +33,10 @@ var commandFactory = (function() {
                     return keyboardPressClientCommand;
                     break;
                 }
+                case "scroll": {
+                    return scrollClientCommand;
+                    break;
+                }
                 default: {
                     throw new Error("Unsupported command " + commandName);
                 }

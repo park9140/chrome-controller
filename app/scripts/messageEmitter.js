@@ -5,37 +5,47 @@ var messageEmitter = (function() {
         chrome.tabs.sendMessage(tabs[0].id, data);
       });
     }
+  var scrolling;
 
     return {
+      scroll: function(direction, multiplier) {
+        if(scrolling) {
+          return;
+        }
+        scrolling = setTimeout(function() { scrolling = false }, 50);
+        console.log(multiplier, direction, 'scroll');
+        var message = new emitterCommand('scroll').addParam('multiplier', multiplier).addParam('direction', direction);
+        sendMessage(message);
+      },
       sendMessageToCurrentTab: function(data) {
         sendMessage(data);
       },
-      sendMove: function(direction) {
-          var message = new emitterCommand('moveFocus').addParam('direction', direction);
+      sendMove: function(direction, playerId) {
+          var message = new emitterCommand('moveFocus').addParam('direction', direction).addParam('playerId', playerId);
           sendMessage(message);
       },
       sendNavigation: function(direction) {
         var message = new emitterCommand('browserNavigation').addParam('direction', direction);
         sendMessage(message);
       },
-      sendSelect: function() {
-        var message = new emitterCommand('confirmSelection');
+      sendSelect: function(playerId) {
+        var message = new emitterCommand('confirmSelection').addParam('playerId', playerId);
         sendMessage(message);
       },
       sendToggleFullScreen: function() {
         var message = new emitterCommand('togglefullscreen');
         sendMessage(message);
       },
-      sendToggleKeyboard: function(state) {
-        var message = new emitterCommand('togglekeyboard').addParam('state', state);
+      sendToggleKeyboard: function(state, playerId) {
+        var message = new emitterCommand('togglekeyboard').addParam('state', state).addParam('playerId', playerId);
         sendMessage(message);
       },
-      sendHighlightCell: function(cellToHighlight) {
-        var message = new emitterCommand('highlightcell').addParam('cellToHighlight', cellToHighlight);
+      sendHighlightCell: function(cellToHighlight, playerId) {
+        var message = new emitterCommand('highlightcell').addParam('cellToHighlight', cellToHighlight).addParam('playerId', playerId);
         sendMessage(message);
       },
-      sendKeyboardPress: function(direction) {
-        var message = new emitterCommand('keypress').addParam('direction', direction);
+      sendKeyboardPress: function(direction, playerId) {
+        var message = new emitterCommand('keypress').addParam('direction', direction).addParam('playerId', playerId);
         sendMessage(message);
       }
     }

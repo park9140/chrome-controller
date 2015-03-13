@@ -20,7 +20,6 @@ body {
   font-size: 12px;
   text-align: right;
   display: inline-block;
-  height: 100%;
 }
 
 .binding-container div {
@@ -57,7 +56,6 @@ body {
   font-size: 12px;
   text-align: right;
   display: inline-block;
-  height: 100%;
 }
 
 .group-container div {

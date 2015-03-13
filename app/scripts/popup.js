@@ -6,64 +6,81 @@
     'forward', 'back', 'active-tab-reload',
     'next-tab', 'prev-tab',
     'confirm', 'cancel',
-    'home',
+    'home', 'new-tab', 'close-tab',
     'toggle-keyboard',
     'keyboard-up', 'keyboard-left', 'keyboard-right', 'keyboard-down',
     'keyboard-north', 'keyboard-west', 'keyboard-east', 'keyboard-south'
   ];
 
-  function addKeybind(key, controllerIndex, buttonIndex) {
-        var div = document.getElementById(key.replace('.', '-'));
+  var controllerAxisActions = [
+    'scroll-vertical', 'scroll-horizontal'
+  ];
 
-        if (div) {
-          var textNode = document.createTextNode('ctrl :' + controllerIndex + ', btn: ' + buttonIndex);
-          var spanNode = document.createElement('span');
-
-          spanNode.appendChild(textNode);
-          spanNode.classList.add('keybind');
-          spanNode.addEventListener('click', function() {
-            chrome.runtime.sendMessage({ id: 'chromeController.clearBinding', action: key, controllerIndex: controllerIndex, buttonIndex: buttonIndex });
-            div.querySelector('div').removeChild(spanNode);
-          });
-          div.querySelector('div').appendChild(spanNode);
+  function addKeybind(key, controllerIndex, actionId) {
+        var div = document.getElementById(key);
+        if(!div) {
+          return;
         }
+        var textNode = document.createTextNode('ctrl :' + controllerIndex + ', ' + actionId);
+        var spanNode = document.createElement('span');
+
+        spanNode.appendChild(textNode);
+        spanNode.classList.add('keybind');
+        spanNode.addEventListener('click', function() {
+          chrome.runtime.sendMessage({ id: 'chromeController.clearBinding', action: key, controllerIndex: controllerIndex, actionId: actionId });
+          div.querySelector('div').removeChild(spanNode);
+        });
+        div.querySelector('div').appendChild(spanNode);
   };
 
-  chromeControllerActions.forEach(function(key, i) {
+  function buildInterface(key, i, bindAxis) {
     var div = document.getElementById(key);
 
     div.querySelector('button').addEventListener('click', function() {
-      var setBindingFn = function(response) {
+      var setBindingFn = function(response, axisResponse) {
         console.log('callback called');
+        if(bindAxis) {
+          response = response.axisData;
+        } else {
+          response = response.buttonData;
+        }
 
         chrome.runtime.sendMessage({
           id: 'chromeController.setBinding',
           action: key,
           controller: response.controllerIndex,
-          button: response.buttonIndex
+          button: response.actionId
         });
-        addKeybind(key, response.controllerIndex, response.buttonIndex);
+        addKeybind(key, response.controllerIndex, response.actionId);
       };
 
       chrome.runtime.sendMessage({ id: 'chromeController.getNextInput' }, setBindingFn);
     });
+  }
+
+  chromeControllerActions.forEach(function(key, i) {
+    buildInterface(key, i);
   });
 
-chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(response) {
-  console.log(response);
+  controllerAxisActions.forEach(function(key, i) {
+    buildInterface(key, i, true);
+  });
 
-  var controllers = Object.keys(response);
-  controllers.forEach(function(controller) {
-    var buttons = Object.keys(response[controller]);
-    buttons.forEach(function(button) {
-      var actions = response[controller][button];
+  chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(response) {
+    console.log(response);
 
-      actions.forEach(function(action) {
-        addKeybind(action, controller, button);
+    var controllers = Object.keys(response);
+    controllers.forEach(function(controller) {
+      var buttons = Object.keys(response[controller]);
+      buttons.forEach(function(button) {
+        var actions = response[controller][button];
+
+        actions.forEach(function(action) {
+          addKeybind(action.replace('.','-'), controller, button);
+        });
       });
     });
   });
-});
 
   document.getElementById('sendHelloButton')
           .addEventListener('click', function () {
@@ -73,6 +90,7 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
   document.getElementById('clearStorage')
     .addEventListener('click', function() {
       chrome.runtime.sendMessage({ id: 'chromeController.clearBindings' });
+      window.location.reload();
     });
 
   document.getElementById('navigateForward')

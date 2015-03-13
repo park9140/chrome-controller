@@ -33,15 +33,30 @@ function onReloadTab() {
     });
 }
 
+function createNewTab() {
+
+    chrome.tabs.create({url: chrome.extension.getURL('/popup.html')});
+
+}
+
+function closeTab() {
+    getActiveTabIndex(function(activeTabIndex){
+        getTabByIndex(activeTabIndex, function (tab) {
+            chrome.tabs.remove(tab.id);
+        });
+    });
+}
+
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
+  var playerId = e.playerId;
   switch(e.id) {
       case 'chromeController.up':
       case 'chromeController.down':
       case 'chromeController.right':
       case 'chromeController.left':
-          messageEmitter.sendMove(message);
+          messageEmitter.sendMove(message, playerId);
           break;
       case 'chromeController.forward':
           messageEmitter.sendNavigation('forward');
@@ -59,7 +74,19 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           onPreviousTab();
           break;
       case 'chromeController.confirm':
-          messageEmitter.sendSelect();
+          messageEmitter.sendSelect(playerId);
+          break;
+      case 'chromeController.new-tab':
+          createNewTab();
+          break;
+      case 'chromeController.scroll-vertical':
+          messageEmitter.scroll('vertical', e.actionValue);
+          break;
+      case 'chromeController.scroll-horizontal':
+          messageEmitter.scroll('horizontal', e.actionValue);
+          break;
+      case 'chromeController.close-tab':
+          closeTab();
           break;
       case 'chromeController.cancel':
       case 'chromeController.home':

@@ -1,5 +1,5 @@
 "use strict";
-var keyboard = (function() {
+function createKeyboard(player) {
   var input = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ', ',', '.', '!', '?', '\''];
 
   var keyboard =
@@ -60,7 +60,7 @@ var keyboard = (function() {
   function toggleKeyboard(state) {
     keyboardNode.style.setProperty('position', 'absolute');
 
-    var focusedRect = document.activeElement.getBoundingClientRect();
+    var focusedRect = player.focus.getBoundingClientRect();
 
     keyboardNode.style.setProperty('top', '' + focusedRect.top + 'px');
     keyboardNode.style.setProperty('left', '' + focusedRect.left + 'px');
@@ -90,7 +90,7 @@ var keyboard = (function() {
 
       console.log('adding character', character);
 
-      document.activeElement.value = document.activeElement.value + character;
+      player.focus.value = player.focus.value + character;
     }
   }
 
@@ -99,4 +99,21 @@ var keyboard = (function() {
     highlightCell: highlightCell,
     sendKeypress: sendKeypress
   };
+}
+var keyboard = (function() {
+  var keyboards = {};
+  function getPlayerKeyboard(playerId) {
+    return keyboards[playerId] = keyboards[playerId] || createKeyboard(getPlayer(playerId));
+  }
+  return {
+    toggleKeyboard: function(state, playerId) {
+      getPlayerKeyboard(playerId).toggleKeyboard(state);
+    },
+    highlightCell: function(index, playerId) {
+      getPlayerKeyboard(playerId).highlightCell(index);
+    },
+    sendKeypress: function(buttonOffset, playerId) {
+      getPlayerKeyboard(playerId).sendKeypress(buttonOffset);
+    }
+  }
 })();

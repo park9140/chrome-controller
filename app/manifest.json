@@ -55,7 +55,7 @@
     "default_title": "chrome controller",
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
+  "options_page": "popup.html",
   "omnibox": {
     "keyword": "chrome controller"
   },
@@ -67,9 +67,11 @@
       ],
       "js": [
         "scripts/clientScripts/elementDistance.js",
+        "scripts/clientScripts/elementVisibility.js",
         "scripts/clientScripts/focusableElements.js",
         "scripts/clientScripts/contentscript.js",
         "scripts/clientScripts/focusClientCommand.js",
+        "scripts/clientScripts/scrollClientCommand.js",
         "scripts/clientScripts/browserNavigationClientCommand.js",
         "scripts/clientScripts/selectClientCommand.js",
         "scripts/clientScripts/commandFactory.js",
