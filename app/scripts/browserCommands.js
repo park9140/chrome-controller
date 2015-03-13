@@ -39,6 +39,14 @@ function createNewTab() {
 
 }
 
+function closeTab() {
+    getActiveTabIndex(function(activeTabIndex){
+        getTabByIndex(activeTabIndex, function (tab) {
+            chrome.tabs.remove(tab.id);
+        });
+    });
+}
+
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
@@ -76,6 +84,8 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           break;
       case 'scroll-horizontal':
           messageEmitter.scroll('horizontal', e.actionValue);
+      case 'close-tab':
+          closeTab();
           break;
       case 'cancel':
       case 'home':
