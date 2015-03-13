@@ -9,6 +9,23 @@ function findFocusables() {
                                    + ',a[href]');
 }
 
+function isRectangleInSamePlaneAsFocusedRectangle(focusedRectangle, rectangle, direction) {
+  var rectangleRight = rectangle.left + rectangle.width;
+  var focusedRectangleRight = focusedRectangle.left + focusedRectangle.width;
+  var rectangleBottom = rectangle.top + rectangle.height;
+  var focusedRectangleBottom = focusedRectangle.top + focusedRectangle.height;
+  switch (direction) {
+    case "up":
+    case "down":
+      return (rectangleRight > focusedRectangle.left && rectangle.left < focusedRectangleRight);
+      break;
+    case "left":
+    case "right":
+      return (rectangleBottom > focusedRectangle.top && rectangle.top < focusedRectangleBottom)
+      break;
+  }
+}
+
 function buildFocusablesMap() {
   var focusableMap = new Map();
   var focusables = findFocusables();
@@ -43,7 +60,10 @@ function moveToNextElement(direction, playerId) {
   var prevDistance = 999999999;
   var closestElement = null;
   focusableMap.forEach(function(elementRectangle, element, map){
-    if (isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)){
+    if (elementVisibility.isElementVisible(element, elementRectangle)
+        && isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect)
+        && isRectangleInSamePlaneAsFocusedRectangle(currentFocusElementRect, elementRectangle, direction)
+        ){
       var currentDistance = elementDistance.getDistanceBetweenElements(currentFocusElementRect, elementRectangle);
       if(currentDistance < prevDistance) {
         closestElement = element;
@@ -60,16 +80,16 @@ function moveToNextElement(direction, playerId) {
 function isThisElementLocatedInTheDirection(direction, elementRectangle, currentFocusElementRect){
   switch (direction) {
     case "up" :
-      return elementRectangle.bottom < currentFocusElementRect.top;
+      return elementRectangle.bottom <= currentFocusElementRect.top;
       break;
     case "down":
-      return (elementRectangle.top > currentFocusElementRect.bottom);
+      return (elementRectangle.top >= currentFocusElementRect.bottom);
       break;
     case "left":
-      return (elementRectangle.right < currentFocusElementRect.left);
+      return (elementRectangle.right <= currentFocusElementRect.left);
       break;
     case "right":
-      return (elementRectangle.left > currentFocusElementRect.right);
+      return (elementRectangle.left >= currentFocusElementRect.right);
       break;
   }
 }

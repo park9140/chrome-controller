@@ -89,7 +89,7 @@ function getPollFn(gamepadIndex) {
           id: 'controller.buttonPressed',
           controllerIndex: gamepadIndex,
           actionId: axisIndex,
-          value: Math.abs(axis)
+          value: axis
         }
 
         chrome.runtime.sendMessage(axisData);

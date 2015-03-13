@@ -7,6 +7,11 @@ var messageEmitter = (function() {
     }
 
     return {
+      scroll: function(direction, multiplier) {
+        console.log(multiplier, direction, 'scroll');
+        var message = new emitterCommand('scroll').addParam('multiplier', multiplier).addParam('direction', direction);
+        sendMessage(message);
+      },
       sendMessageToCurrentTab: function(data) {
         sendMessage(data);
       },

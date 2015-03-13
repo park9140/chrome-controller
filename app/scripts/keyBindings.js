@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
       if (actions) {
         console.log('translating button event into extension event', e, actions);
         actions.forEach(function(action) {
-          chrome.runtime.sendMessage({ id: 'chromeController.' + action, playerId: e.controllerIndex });
+          chrome.runtime.sendMessage({ id: 'chromeController.' + action, playerId: e.controllerIndex, actionValue: e.value });
         });
       }
       break;
