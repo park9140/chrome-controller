@@ -66,6 +66,7 @@
       ],
       "js": [
         "scripts/clientScripts/elementDistance.js",
+        "scripts/clientScripts/elementVisibility.js",
         "scripts/clientScripts/focusableElements.js",
         "scripts/clientScripts/contentscript.js",
         "scripts/clientScripts/focusClientCommand.js",
