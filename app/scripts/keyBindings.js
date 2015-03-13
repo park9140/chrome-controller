@@ -39,6 +39,22 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
     case 'chromeController.keyboard.toggle-keyboard':
       mode = mode === 'keyboard' ? '' : 'keyboard';
       messageEmitter.sendToggleKeyboard();
+      break;
+    case 'chromeController.clearBinding':
+      if (bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex] && bindings[e.controllerIndex][e.buttonIndex].indexOf(e.action) > -1) {
+        var indexOfAction = bindings[e.controllerIndex][e.buttonIndex].indexOf(e.action);
+        bindings[e.controllerIndex][e.buttonIndex].splice(indexOfAction, 1);
+        if(bindings[e.controllerIndex][e.buttonIndex].length === 0) {
+          delete bindings[e.controllerIndex][e.buttonIndex];
+          if(Object.keys(bindings[e.controllerIndex]).length === 0) {
+            delete bindings[e.controllerIndex];
+          }
+        }
+      }
+
+      chrome.storage.sync.set({ bindings: bindings });
+
+      break;
     case 'controller.buttonPressed':
       var actions = bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex];
       if (actions) {
@@ -54,9 +70,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
       var actions = bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex];
       if (actions) {
         actions.forEach(function(action) {
-          if (action.split('.')[0] == 'keyboard') {
-            chrome.runtime.sendMessage({ id: 'chromeController.' + action + '.unpress' });
-          }
+          chrome.runtime.sendMessage({ id: 'chromeController.' + action + '.unpress', playerId: e.controllerIndex });
         });
       }
       break;

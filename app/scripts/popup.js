@@ -12,6 +12,23 @@
     'keyboard-north', 'keyboard-west', 'keyboard-east', 'keyboard-south'
   ];
 
+  function addKeybind(key, controllerIndex, buttonIndex) {
+        var div = document.getElementById(key.replace('.', '-'));
+
+        if (div) {
+          var textNode = document.createTextNode('ctrl :' + controllerIndex + ', btn: ' + buttonIndex);
+          var spanNode = document.createElement('span');
+
+          spanNode.appendChild(textNode);
+          spanNode.classList.add('keybind');
+          spanNode.addEventListener('click', function() {
+            chrome.runtime.sendMessage({ id: 'chromeController.clearBinding', action: key, controllerIndex: controllerIndex, buttonIndex: buttonIndex });
+            div.querySelector('div').removeChild(spanNode);
+          });
+          div.querySelector('div').appendChild(spanNode);
+        }
+  };
+
   chromeControllerActions.forEach(function(key, i) {
     var div = document.getElementById(key);
 
@@ -25,12 +42,7 @@
           controller: response.controllerIndex,
           button: response.buttonIndex
         });
-
-        var textNode = document.createTextNode('ctrl :' + response.controllerIndex + ', btn: ' + response.buttonIndex);
-        var spanNode = document.createElement('span');
-
-        spanNode.appendChild(textNode);
-        div.querySelector('div').appendChild(spanNode);
+        addKeybind(key, response.controllerIndex, response.buttonIndex);
       };
 
       chrome.runtime.sendMessage({ id: 'chromeController.getNextInput' }, setBindingFn);
@@ -47,15 +59,7 @@ chrome.runtime.sendMessage({ id: 'chromeController.getBindings' }, function(resp
       var actions = response[controller][button];
 
       actions.forEach(function(action) {
-        var textNode = document.createTextNode('ctrl: ' + controller + ', btn: ' + button);
-        var spanNode = document.createElement('span');
-
-        spanNode.appendChild(textNode);
-        console.log(action);
-        var elem = document.getElementById(action.replace('.', '-'));
-        if (elem) {
-          elem.querySelector('div').appendChild(spanNode);
-        }
+        addKeybind(action, controller, button);
       });
     });
   });
