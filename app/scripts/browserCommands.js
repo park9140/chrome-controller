@@ -72,7 +72,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           createNewTab();
           break;
       case 'scroll-vertical':
-          messageEmitter.scroll('vertical', .actionValue);
+          messageEmitter.scroll('vertical', e.actionValue);
           break;
       case 'scroll-horizontal':
           messageEmitter.scroll('horizontal', e.actionValue);

@@ -5,9 +5,14 @@ var messageEmitter = (function() {
         chrome.tabs.sendMessage(tabs[0].id, data);
       });
     }
+  var scrolling;
 
     return {
       scroll: function(direction, multiplier) {
+        if(scrolling) {
+          return;
+        }
+        scrolling = setTimeout(function() { scrolling = false }, 50);
         console.log(multiplier, direction, 'scroll');
         var message = new emitterCommand('scroll').addParam('multiplier', multiplier).addParam('direction', direction);
         sendMessage(message);

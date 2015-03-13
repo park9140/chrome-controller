@@ -70,6 +70,7 @@
         "scripts/clientScripts/focusableElements.js",
         "scripts/clientScripts/contentscript.js",
         "scripts/clientScripts/focusClientCommand.js",
+        "scripts/clientScripts/scrollClientCommand.js",
         "scripts/clientScripts/browserNavigationClientCommand.js",
         "scripts/clientScripts/selectClientCommand.js",
         "scripts/clientScripts/commandFactory.js",

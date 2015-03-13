@@ -7,6 +7,7 @@ function getPollFn(gamepadIndex) {
     buttons: [],
     axes: []
   };
+  var slowAxis = {};
 
   return function() {
     var gamepad = navigator.getGamepads()[gamepadIndex];
@@ -48,11 +49,20 @@ function getPollFn(gamepadIndex) {
 
     var axisOffset = gamepad.buttons.length;
     gamepad.axes.forEach(function(axis, i) {
+      var lastAxis = lastGamepad.axes[i]
+      var axisIndex = 'axis ' +  i;
+      if (lastAxis > .2) {
+        var axisData = {
+          id: 'controller.buttonPressed',
+          controllerIndex: gamepadIndex,
+          actionId: axisIndex,
+          value: axis
+        }
+        chrome.runtime.sendMessage(axisData);
+      }
       if (axis !== 0 && Math.abs(axis) > .2) {
-        var lastAxis = lastGamepad.axes[i]
         console.log('controller axis ' + i + ' pressed with value ' + axis);
 
-        var axisIndex = 'axis ' +  i;
         var eventData;
         if(!(lastAxis > .5) && axis > .5) {
           eventData = {
@@ -91,8 +101,10 @@ function getPollFn(gamepadIndex) {
           actionId: axisIndex,
           value: axis
         }
-
-        chrome.runtime.sendMessage(axisData);
+        if(!slowAxis[i]) {
+          chrome.runtime.sendMessage(axisData);
+          slowAxis[i] = setTimeout(function() { slowAxis[i] = false; }, 400);
+        }
         if(eventData) {
           chrome.runtime.sendMessage(eventData);
           if (getInputCallback) {
