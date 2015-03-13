@@ -34,7 +34,7 @@
         div.querySelector('div').appendChild(spanNode);
       };
 
-      chrome.runtime.sendMessage({ id: 'chromeController.getNextButton' }, setBindingFn);
+      chrome.runtime.sendMessage({ id: 'chromeController.getNextInput' }, setBindingFn);
     });
   });
 
