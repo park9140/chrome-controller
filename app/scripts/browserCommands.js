@@ -26,7 +26,7 @@ function onNextTab() {
 }
 
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
-  console.log('controller.js - chrome event recieved: ', e);
+  console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
   switch(message) {
       case 'up':

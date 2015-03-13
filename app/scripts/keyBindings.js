@@ -8,7 +8,7 @@ chrome.storage.sync.get('bindings', function(response) {
 });
 
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
-  console.log('keyBindings.js - chrome event recieved: ', e);
+  console.log('keyBindings.js - chrome event recieved: ', e.id);
 
   switch(e.id) {
     case 'chromeController.setBinding':
