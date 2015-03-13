@@ -9,6 +9,7 @@
     <!-- build:css styles/main.css -->
     <link href="styles/main.css" rel="stylesheet">
     <link href="styles/popup.css" rel="stylesheet">
+    <link href="styles/content.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body>
@@ -110,7 +111,13 @@
         <label>Home (Load your Home Page)</label>
         <div></div>
         <button>bind</button>
-    </div>
+      </div>
+
+      <div id="new-tab" class="binding-container">
+        <label>Open a New Tab</label>
+        <div></div>
+        <button>bind</button>
+      </div>    
     </div>
 
 
@@ -121,6 +128,14 @@
     <script src="scripts/popup.js"></script>
     <script src="scripts/messageEmitter.js"></script>
     <script src="scripts/emitterCommand.js"></script>
+    <script src="scripts/clientScripts/elementDistance.js"></script>
+    <script src= "scripts/clientScripts/focusableElements.js"></script>
+    <script src="scripts/clientScripts/contentscript.js"></script>
+    <script src="scripts/clientScripts/focusClientCommand.js"></script>
+    <script src="scripts/clientScripts/browserNavigationClientCommand.js"></script>
+    <script src="scripts/clientScripts/selectClientCommand.js"></script>
+    <script src="scripts/clientScripts/commandFactory.js"></script>
+    <script src="scripts/clientScripts/browserFullScreenClientCommand.js"></script>
     <!-- endbuild -->
   </body>
 </html>

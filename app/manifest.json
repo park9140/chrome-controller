@@ -54,7 +54,7 @@
     "default_title": "chrome controller",
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
+  "options_page": "popup.html",
   "omnibox": {
     "keyword": "chrome controller"
   },

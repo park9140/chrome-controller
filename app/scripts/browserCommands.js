@@ -33,6 +33,12 @@ function onReloadTab() {
     });
 }
 
+function createNewTab() {
+
+    chrome.tabs.create({url: chrome.extension.getURL('/popup.html')});
+
+}
+
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
   console.log('browserCommands.js - chrome event recieved: ', e.id);
   var message = e.id.split('.')[1];
@@ -60,6 +66,9 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
           break;
       case 'confirm':
           messageEmitter.sendSelect();
+          break;
+      case 'new-tab':
+          createNewTab();
           break;
       case 'cancel':
       case 'home':
