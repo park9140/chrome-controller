@@ -49,7 +49,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
       case 'back':
           messageEmitter.sendNavigation('backward');
           break;
-      case 'active-tab-reload'
+      case 'active-tab-reload':
           onReloadTab();
           break;
       case 'next-tab':

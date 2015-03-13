@@ -7,7 +7,7 @@
 
   var chromeControllerActions = [
     'up', 'left', 'right', 'down',
-    'forward', 'back', 'active-tab-reload'
+    'forward', 'back', 'active-tab-reload',
     'next-tab', 'prev-tab',
     'confirm', 'cancel',
     'home'
