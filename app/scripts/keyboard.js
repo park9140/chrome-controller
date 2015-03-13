@@ -3,9 +3,13 @@
 var cellToHighlight = 4;
 
 chrome.runtime.onMessage.addListener(function(e, sender, callback) {
-  console.log('keyBindings.js - chrome event recieved: ', e.id);
+  console.log('keyboard.js - chrome event recieved: ', e.id);
 
   switch(e.id) {
+    case 'chromeController.toggle-keyboard':
+    case 'chromeController.keyboard.toggle-keyboard':
+      cellToHighlight = 4;
+      break;
     case 'chromeController.keyboard.up':
     case 'chromeController.keyboard.down.unpress':
       cellToHighlight -= 3;

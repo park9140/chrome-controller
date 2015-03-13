@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function(e, sender, callback) {
     case 'chromeController.toggle-keyboard':
     case 'chromeController.keyboard.toggle-keyboard':
       mode = mode === 'keyboard' ? '' : 'keyboard';
-      messageEmitter.sendToggleKeyboard();
+      messageEmitter.sendToggleKeyboard(mode === 'keyboard');
       break;
     case 'chromeController.clearBinding':
       if (bindings[e.controllerIndex] && bindings[e.controllerIndex][e.buttonIndex] && bindings[e.controllerIndex][e.buttonIndex].indexOf(e.action) > -1) {

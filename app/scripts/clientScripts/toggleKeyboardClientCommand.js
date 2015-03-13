@@ -3,7 +3,9 @@ var toggleKeyboardClientCommand = (function() {
 
     return {
         execute: function(emitterCommand) {
-            keyboard.toggleKeyboard();
+          var state = emitterCommand.getParam("state");
+
+          keyboard.toggleKeyboard(state);
         }
     }
 })();

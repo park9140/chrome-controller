@@ -57,14 +57,16 @@ var keyboard = (function() {
   keyboardNode.hidden = true;
   document.body.appendChild(keyboardNode);
 
-  function toggleKeyboard() {
+  function toggleKeyboard(state) {
     keyboardNode.style.setProperty('position', 'absolute');
 
     var focusedRect = document.activeElement.getBoundingClientRect();
 
     keyboardNode.style.setProperty('top', '' + focusedRect.top + 'px');
     keyboardNode.style.setProperty('left', '' + focusedRect.left + 'px');
-    keyboardNode.hidden = !keyboardNode.hidden;
+    keyboardNode.hidden = !state;
+
+    currentlyHighlighedIndex = 4;
   }
 
   function highlightCell(index) {

@@ -26,8 +26,8 @@ var messageEmitter = (function() {
         var message = new emitterCommand('togglefullscreen');
         sendMessage(message);
       },
-      sendToggleKeyboard: function() {
-        var message = new emitterCommand('togglekeyboard');
+      sendToggleKeyboard: function(state) {
+        var message = new emitterCommand('togglekeyboard').addParam('state', state);
         sendMessage(message);
       },
       sendHighlightCell: function(cellToHighlight) {
